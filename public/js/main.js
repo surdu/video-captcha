@@ -23,7 +23,7 @@ const sequenceIndex = random(sequences.length);
 const audioContext = new AudioContext()
 
 function random(max) {
-  return Math.floor(Math.random() * (max + 1));
+  return Math.floor(Math.random() * max);
 }
 
 function flashSequence(sequence) {
@@ -108,7 +108,6 @@ startBtn.addEventListener("click", function() {
 			}
 			mediaRecorder.onstop = (ev)=>{
 				const movie = new Blob(chunks, { 'type' : 'video/mp4;' });
-				console.log("blob:", blob);
 
 				preview.style.display = "none";
 				thanks.style.display = "block";
@@ -130,14 +129,15 @@ startBtn.addEventListener("click", function() {
 				mediaRecorder.start();
 				console.log(mediaRecorder.state);
 
-				const sequence = sequence[sequenceIndex];
-				flashSequence(sequence);
-				playBeep();
+				setTimeout(function(){
+					flashSequence(sequences[sequenceIndex]);
+					playBeep();
 
-				setTimeout(function() {
-					mediaRecorder.stop();
-					video.pause();
-				}, 5000);
+					setTimeout(function() {
+						mediaRecorder.stop();
+						video.pause();
+					}, 5000);
+				}, 200);
 			});
 		})
 		.catch(function(err) {
