@@ -10,7 +10,7 @@ const storage = multer.diskStorage({
     const filename = `${sequence}_${uuid()}.mp4`;
     callback(null, filename);
   }
-})
+});
 
 const upload = multer({ storage: storage })
 

@@ -15,8 +15,8 @@ const videoConstraints = {
 };
 
 const sequences = [
-	"000:1000|002B7F:1000|FCD116:1000|CE1126:1000|lime:1000|fff:0",
-	"red:1000|lime:1000|black:1000|magenta:1000|purple:1000|fff:0"
+	"black:1000|002B7F:1000|FCD116:1000|CE1126:1000|lime:1000|fff:0",
+	"red:1000|lime:1000|black:1000|magenta:1000|purple:1000|white:0"
 ];
 const sequenceIndex = random(sequences.length);
 
@@ -41,7 +41,6 @@ function flashSequence(sequence) {
 
 		if (item) {
 			html.style.backgroundColor = item.color;
-
 			setTimeout(renderItem, item.duration);
 		}
 	}
@@ -137,7 +136,7 @@ startBtn.addEventListener("click", function() {
 						mediaRecorder.stop();
 						video.pause();
 					}, 5000);
-				}, 200);
+				}, 1000);
 			});
 		})
 		.catch(function(err) {
