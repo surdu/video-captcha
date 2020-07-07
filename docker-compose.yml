@@ -18,6 +18,9 @@ services:
     volumes:
       - ./config/nginx:/etc/nginx/conf.d
       - ./config/letsencrypt/etc/letsencrypt/live/biometrica.fr:/cert
+    depends_on:
+      - video-captcha
+      - letsencrypt
 
   letsencrypt:
     image: linuxserver/letsencrypt
