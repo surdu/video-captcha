@@ -63,3 +63,4 @@ typings/
 .DS_Store
 movies/*
 config/*
+!config/nginx
