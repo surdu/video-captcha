@@ -1,0 +1,34 @@
+version: '3'
+services:
+  video-captcha:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    volumes:
+      - .:/app
+    environment:
+      NODE_ENV: development
+
+  nginx:
+    image: nginx:1.15-alpine
+    restart: unless-stopped
+    ports:
+      - "8080:80"
+      # - "443:443"
+    volumes:
+      - ./config/nginx:/etc/nginx/conf.d
+      - ./config/letsencrypt/etc/letsencrypt/live/biometrica.fr:/cert
+
+  letsencrypt:
+    image: linuxserver/letsencrypt
+    container_name: letsencrypt
+    restart: unless-stopped
+    environment:
+      - TZ=Europe/Bucharest
+      - URL=biometrica.fr
+      - SUBDOMAINS=wildcard
+      - VALIDATION=dns
+      - DNSPLUGIN=digitalocean
+      - EMAIL=postal2600@gmail.com
+    volumes:
+      - ./config/letsencrypt:/config
