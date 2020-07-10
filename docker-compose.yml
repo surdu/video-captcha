@@ -4,13 +4,15 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
+    restart: unless-stopped
     volumes:
       - .:/app
     environment:
       NODE_ENV: development
 
   nginx:
-    image: nginx:1.15-alpine
+    image: linuxserver/nginx
+    container_name: nginx
     restart: unless-stopped
     ports:
       - "8080:80"
@@ -27,6 +29,8 @@ services:
     container_name: letsencrypt
     restart: unless-stopped
     environment:
+      - PUID=${ROBI_USER_ID}
+      - PGID=${ROBI_GROUP_ID}
       - TZ=Europe/Bucharest
       - URL=biometrica.fr
       - SUBDOMAINS=wildcard
