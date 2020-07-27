@@ -14,10 +14,10 @@ services:
     restart: unless-stopped
     ports:
       - "8080:80"
-      # - "443:443"
+      - "443:443"
     volumes:
-      - ./config/nginx:/etc/nginx/conf.d
-      - ./config/letsencrypt/etc/letsencrypt/live/biometrica.fr:/cert
+      - ./config/nginx:/config
+      - ./config/letsencrypt/etc/letsencrypt:/cert
     depends_on:
       - video-captcha
       - letsencrypt
