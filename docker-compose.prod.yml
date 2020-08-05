@@ -1,0 +1,32 @@
+version: '3'
+
+services:
+  nginx:
+    image: linuxserver/nginx
+    container_name: nginx
+    restart: unless-stopped
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./config/nginx:/config
+      - ./config/letsencrypt/etc/letsencrypt:/cert
+    depends_on:
+      - video-captcha
+      - letsencrypt
+
+  letsencrypt:
+    image: linuxserver/letsencrypt
+    container_name: letsencrypt
+    restart: unless-stopped
+    environment:
+      - PUID=${ROBI_USER_ID}
+      - PGID=${ROBI_GROUP_ID}
+      - TZ=Europe/Bucharest
+      - URL=biometrica.fr
+      - SUBDOMAINS=wildcard
+      - VALIDATION=dns
+      - DNSPLUGIN=digitalocean
+      - EMAIL=postal2600@gmail.com
+    volumes:
+      - ./config/letsencrypt:/config
