@@ -1,6 +1,10 @@
 version: '3'
 
 services:
+  video-captcha:
+    volumes:
+      - ./movies:/app/movies
+
   nginx:
     image: linuxserver/nginx
     container_name: nginx

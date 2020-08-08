@@ -5,7 +5,5 @@ services:
       context: .
       dockerfile: Dockerfile
     restart: unless-stopped
-    volumes:
-      - ./movies:/app/movies
     environment:
       NODE_ENV: development
