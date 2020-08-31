@@ -16,8 +16,7 @@ const videoConstraints = {
 };
 
 const sequences = [
-	"black:1000|002B7F:1000|FCD116:1000|CE1126:1000|lime:1000|transparent:0",
-	"red:1000|lime:1000|black:1000|magenta:1000|purple:1000|transparent:0"
+	"black:1000:0|white:1990:0|black:1:1",
 ];
 const sequenceIndex = random(sequences.length);
 
@@ -31,8 +30,8 @@ function flashSequence(sequence) {
 	const items = sequence
 		.split("|")
 		.map(function(item){
-			const [color, duration] = item.split(":");
-			return {color, duration};
+			const [color, duration, faceness] = item.split(":");
+			return {color, duration, faceness};
 		});
 
 	renderItem();
@@ -43,18 +42,16 @@ function flashSequence(sequence) {
 		//const dur = 400;
         //playBeepBeep(freq, dur);
 		if (item) {
-    		const overlay = document.createElement('div')
-    		overlay.style.backgroundColor = item.color
-			overlay.style.width = "100vw"
-			overlay.style.height = "100vh"
-			overlay.style.position ="absolute"
-			overlay.style.top = "0"
-			overlay.style.left = "0"
+    		
+    		html.style.backgroundColor = item.color
+			const faceness = parseInt(item.faceness, 10)
+            if (faceness){
+               preview.style.display = "block"; 
+            }	
+            else {
+                preview.style.display = "none";
+            }		
 			
-			const body = document.getElementsByTagName('body')[0]
-			body.appendChild(overlay)
-			//html.style.backgroundColor = item.color;
-			//playBeep();
 			setTimeout(renderItem, item.duration);
 		}
 	}
@@ -63,11 +60,22 @@ function flashSequence(sequence) {
 
 
 const cycleColors = (durations, startTime, classNames) => {
+    preview.style.display = "none";
+    preview.style.display = "block";
+    durations.forEach(function(duration, index){
+        setTimeout(function(){
+            console.log(classNames[index])
+            html.classList = "overlay " + classNames[index]
+              
+        }, duration)
+    })
+    /*
     setTimeout(durations.forEach((duration, idx) =>
         setTimeout(()=>{
         console.log(classNames[idx])
-        overlay.classList = "overlay " + classNames[idx] 
+        html.classList = "overlay " + classNames[idx] 
     }, duration)), startTime)
+    */
 }
 
 function playBeepBeep(freq, dur) {
@@ -217,9 +225,13 @@ startBtn.addEventListener("click", function() {
                     tempo = 100;
                     playMelody();
                     
-					//flashSequence(sequences[sequenceIndex]);
+                    setTimeout(function() {
+                        flashSequence(sequences[sequenceIndex]);
+					}, 3000);
+					
+					
 					//playBeep();
-                    cycleColors([1100,2000, 2050, 5000, 6000, 6030], 500, ['white', 'black', 'transparent','white', 'black', 'transparent'])
+                    //cycleColors([1100,2000, 2050, 5000, 6000, 6030], 500, ['white', 'black', 'transparent','white', 'black', 'transparent'])
 					setTimeout(function() {
 						mediaRecorder.stop();
 						video.pause();
