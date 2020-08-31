@@ -30,6 +30,7 @@ body {
 
   #preview video {
     background-color: black;
+    z-index: 10;
   }
 
 #startBtn {
@@ -37,10 +38,51 @@ body {
   height: 100px;
   font-size: 22px;
   font-weight: bold;
+  position: relative;
+  z-index: 50;
 }
 
 #thanks {
   font-size: 100px;
   font-weight: bold;
   display: none;
+}
+
+
+#overlayWrapper{
+    
+}
+
+.overlay{
+    position: absolute;
+    width: 100vw;
+    height: 100vh;
+    z-index: 0;
+    top: 0;
+    left: 0;
+}
+
+.black{
+    background-color: black;
+    z-index: 100;
+}
+
+.white{
+    background-color: white;
+    z-index: 100;
+}
+
+.green{
+    background-color: green;
+    z-index: 100;
+}
+
+.red{
+    background-color: red;
+    z-index: 100;
+}
+
+.transparent{
+    background-color: white;
+    z-index: 0;
 }
